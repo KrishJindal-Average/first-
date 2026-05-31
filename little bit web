@@ -1,0 +1,33 @@
+import pywhatkit
+from gtts import gTTS
+import os
+import time 
+print("Welcome to PyWhatKit! What would you like to do?")
+print("1. Play a song on YouTube")
+print("2. Search something on Google")
+print("3. Play a video on YouTube")
+choice = input("Please enter your choice (1/2/3): ")
+if choice == "1":
+    text = "playing a song on youtube"
+    gtts = gTTS(text)
+    gtts.save("song.mp3")
+    os.system("start song.mp3")
+
+    time.sleep(3)
+
+    os.remove("song.mp3")
+    song = input("Which song do you want to play? ")
+    pywhatkit.playonyt(song)
+
+elif choice == "2":
+
+    query = input("What do you want to search on Google? ")
+    pywhatkit.search(query)
+
+elif choice == "3":
+
+    video = input("which video would you like to play? " )
+    pywhatkit.playonyt(video)
+
+else:
+    print("Unrecognized option. Please type 'play' or 'search'.")
