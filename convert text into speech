@@ -1,1 +1,113 @@
+from gtts import gTTS 
+import os 
+import time
+import requests
+import pyjokes 
+
+
+print("===================================")
+print(" WHAT WOULD YOU LIKE TO DO TODAY ?")
+print("===================================")
+print("1. convert text into speech ")
+print("2. learn a new word")
+print("3. get a random joke")
+print("4. get a poem  you want ")
+print("5. EXIT")
+print("===================================")
+while True:
+ choice = input("please enter your choice(1/2/3/4/5): ")
+ if choice == "1":
+    text = input("enter the text you want to convert into speech: ")
+    tts = gTTS(text)
+    tts.save("output.mp3")
+    os.system("start output.mp3")
+
+    time.sleep(5)
+    
+    
+
+ elif choice == "2":
+    word = input("enter the word you want to learn: ").lower()
+    response = requests.get("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
+    data = response.json()
+    if type(data) == list:
+        word_name = data[0].get("word", word)
+        meanings = data[0].get("meanings", [])
+        if meanings and meanings[0].get("definitions"):
+            definition_data = meanings[0]["definitions"][0]
+            word_meaning = definition_data.get("definition", "No definition found")
+            part_of_speech = meanings[0].get("partOfSpeech", "unknown")
+            example = definition_data.get("example", "no example found")
+
+            print("/n===================================")
+            print("word  : " + word_name)
+            print("type  : " + part_of_speech)
+            print("meaning : " + word_meaning)
+            print("example : " + example)
+            print("====================================")
+
+            speak_text = (
+                "the word is " + word_name + ". " +
+                "the meaning is " + word_meaning + ". " +
+                "it is a " + part_of_speech + ". " +
+                "for example " + example
+            )
+
+            tts = gTTS(speak_text)
+            tts.save("word.mp3")
+            os.system("start word.mp3")
+            os.remove("word.mp3")
+            time.sleep(6)
+        else:
+            print("sorry, word not found in the dictionary")
+
+            os.remove("word.mp3")
+            
+
+
+ elif choice == "3":
+    print("want to laugh today? here is a joke if you want")
+
+    answer = input("if yes type [y/n]  : ")
+    if answer.lower() == "y":
+        joke = pyjokes.get_joke()
+        print("/n" + joke)
+        tts = gTTS(joke)
+        tts.save("word.mp3")
+        os.system("start word.mp3")
+        time.sleep(5)
+    else : 
+        print("okay maybe next time")
+
+ elif choice == "4":
+
+
+    poem_name = input("enter the name of the poem you want: ")
+    poem_name = poem_name.replace(" ", "%20")
+
+    response = requests.get("https://poetrydb.org/title/" + poem_name)
+    if response.status_code == 200:
+     
+     
+     data = response.json()
+
+     if type(data) == list:
+        print("title  :- " + data[0].get("title", ""))
+        print("author  :-  " + data[0].get("author", ""))
+        print("/n")
+        full_poem = ""
+        for line in data[0]["lines"]:
+            print(line)
+            full_poem += line + " "
+        tts = gTTS(full_poem)
+        tts.save("poem.mp3")
+        os.system("start poem.mp3")
+        time.sleep(15)
+    else:
+        print("poem not found")
+
+ elif choice == "5":
+    print("thank you for checking out my program ")
+    break 
+
 
