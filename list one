@@ -1,0 +1,23 @@
+a = input("Enter the values separated by space: ")
+values = a.split()
+print("The values are: ", values)
+choice = input("Do you want to add more strings or numbers? (1/2): ")
+while True :
+    if choice == "1":
+        b = str(input("only enter string values :-- "))
+        bvalues = b.split()
+        values.append(bvalues)
+        print("The values are: ", values)
+        print("thank you for using our program")
+        break
+    elif choice == "2":
+        c = int(input("only enter numerical values : -- "))
+        cvalues = c.split()
+        values.append(cvalues)
+        print("The values are: ", values)
+        print("thank you for using our program")
+        break
+    else:
+        print("Invalid choice. Please enter 1 or 2.")
+        print("The values are: ", values)
+        break 
