@@ -1,0 +1,62 @@
+from openai import OpenAI
+client = OpenAI(
+    api_key="YOUR_API_KEY"
+)
+
+history = []
+
+while True:
+
+    text = input("Enter your Hinglish text: ").strip()
+
+    if text.lower() == "exit":
+        print("Exiting program...")
+        break
+
+    if not text:
+        print("Please enter some text")
+        continue
+
+    history.append(text)
+    recent_content = "\n".join(history[-5:])
+
+    prompt = f"""
+You are a translator.
+
+Task:
+Translate Hinglish into proper English.
+
+Rules:
+- Keep names unchanged
+- Understand slang and misspellings
+- Return only the final English translation
+
+Conversation context:
+{recent_content}
+
+Current line:
+{text}
+"""
+
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a Hinglish to English translator."
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
+        )
+
+        print(
+            "English:",
+            response.choices[0].message.content.strip()
+        )
+
+    except Exception as e:
+        print("Translation failed:", e)
