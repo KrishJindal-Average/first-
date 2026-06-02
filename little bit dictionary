@@ -1,0 +1,25 @@
+favorite_languages = {}
+print("Enter the details of 4 friends:  ")
+for i in range(1,5):
+    while True:
+    
+        name = input(f"Enter the name of friends {i} :---")
+        if name in favorite_languages:
+            print(f"{name} already exist :")
+            continue
+        if not name:
+            print("name cannot be empty :--")
+            continue 
+        break
+    while True:
+        language = input(f"Enter the favorite language of {name}:---")
+        if not language:
+            print("Language cannot be empty :--")
+            continue
+        break
+    
+    favorite_languages[name] = language
+    print()
+    print("favorie Language dictionary is \n")
+    for name, language in favorite_languages.items():
+        print(f"{name}: {language}")
