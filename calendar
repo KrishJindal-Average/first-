@@ -1,0 +1,10 @@
+import calendar ,re
+
+
+year = int(input("Enter the year :---"))
+month = int(input("Enter the month :----"))
+date = int(input("Enter the date :----"))
+cal = calendar.month(year,month)
+
+highlight = re.sub(rf'\b{date}\b', f"\033[1;31m{date}\033[0m",cal)
+print(highlight)
