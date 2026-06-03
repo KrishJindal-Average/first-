@@ -1,0 +1,7 @@
+import pyjokes
+print("want to laugh today? here is a joke for you")
+answer = input("do you want to hear a joke? (yes/no) ")
+if answer.lower() == "yes":
+    print(pyjokes.get_joke())
+else:
+    print("okay, maybe next time")
