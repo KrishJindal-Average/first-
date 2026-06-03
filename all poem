@@ -1,0 +1,12 @@
+import requests 
+poem_name = input("enter the name of the poem you want:")
+response = requests.get("https://poetrydb.org/title/" + poem_name )
+data = response.json()
+if type(data)==list:
+    print("title :- " + data[0]["title"])
+    print("author :- " + data[0]["author"])
+    print("\n")
+    for line in data[0]["lines"]:
+        print(line)
+    else:
+        print("poem not found")
